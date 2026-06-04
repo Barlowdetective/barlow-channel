@@ -36,63 +36,50 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab-btn{border:none;border-radius:10px 10px 0 0;padding:9px 14px;font-size:13px;cursor:pointer;white-space:nowrap;transition:all 0.2s;background:transparent;color:rgba(255,255,255,0.4);font-weight:400;}
 .tab-btn.active{color:#fff;font-weight:700;}
 .cards{padding:12px 14px 36px;display:flex;flex-direction:column;gap:10px;}
-.video-grid{padding:12px 14px 36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
 .card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:9px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:border-color 0.2s;}
 .card-title{font-weight:600;font-size:14px;line-height:1.45;color:#f1f5f9;text-decoration:none;display:block;}
 .card-summary{margin:0;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;}
 .card-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .card-meta{font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto;}
-.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;flex-shrink:0;letter-spacing:0.3px;}
-.bookmark-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:0;flex-shrink:0;transition:color 0.2s;color:rgba(255,255,255,0.3);}
+.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;flex-shrink:0;}
+.bookmark-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:0;flex-shrink:0;color:rgba(255,255,255,0.3);}
 .bookmark-btn.active{color:#fbbf24;}
-.vid-thumb{height:90px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:14px 14px 0 0;text-decoration:none;overflow:hidden;}
-.play-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;border:2px solid;}
-.vid-dur{position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.75);color:#fff;font-size:11px;padding:2px 7px;border-radius:5px;}
-.vid-ch{position:absolute;top:8px;left:10px;color:#fff;font-size:11px;padding:2px 9px;border-radius:10px;font-weight:700;}
-.vid-body{padding:10px 14px;display:flex;flex-direction:column;gap:5px;}
-.play-btn{border-radius:20px;padding:6px 18px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;transition:all 0.2s;}
 .state-center{text-align:center;padding:70px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;}
 .state-icon{font-size:42px;}
 .state-title{font-size:15px;color:rgba(255,255,255,0.7);font-weight:500;}
 .state-sub{font-size:12px;color:rgba(255,255,255,0.3);}
 .retry-btn{margin-top:8px;border-radius:10px;padding:9px 22px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;}
-
-/* Key Setup Screen */
+.play-btn{border-radius:20px;padding:6px 18px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;}
+/* Key Screen */
 .key-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px;background:linear-gradient(135deg,#0d1b3e 0%,#0f2460 50%,#1a0a3c 100%);}
 .key-logo{font-size:52px;margin-bottom:8px;}
 .key-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:1px;margin-bottom:6px;}
-.key-sub{font-size:14px;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:32px;line-height:1.6;}
-.key-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:16px;}
-.key-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:4px;}
+.key-sub{font-size:14px;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:28px;line-height:1.6;}
+.key-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:14px;}
+.key-label{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;}
 .key-input-wrap{position:relative;}
-.key-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:13px 48px 13px 16px;color:#f1f5f9;font-size:14px;outline:none;-webkit-appearance:none;transition:border-color 0.2s;font-family:monospace;}
+.key-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:13px 44px 13px 16px;color:#f1f5f9;font-size:13px;outline:none;-webkit-appearance:none;transition:border-color 0.2s;font-family:monospace;letter-spacing:0.5px;}
 .key-input:focus{border-color:#6366f1;}
-.key-input::placeholder{color:rgba(255,255,255,0.2);font-family:-apple-system,sans-serif;}
-.key-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:18px;padding:0;}
-.key-save-btn{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.5px;}
-.key-save-btn:hover{opacity:0.9;}
-.key-save-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.key-input::placeholder{color:rgba(255,255,255,0.2);font-family:-apple-system,sans-serif;letter-spacing:0;}
+.key-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:16px;padding:0;}
+.key-save-btn{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;opacity:1;transition:opacity 0.2s;}
+.key-save-btn:disabled{opacity:0.35;cursor:not-allowed;}
 .key-error{font-size:13px;color:#fb7185;text-align:center;padding:8px 12px;background:rgba(251,113,133,0.1);border-radius:8px;border:1px solid rgba(251,113,133,0.2);}
-.key-hint{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;}
+.key-hint{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.7;}
 .key-hint a{color:#818cf8;text-decoration:none;}
-.key-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:4px;}
-.key-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.5);}
+.key-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;}
 .key-step-num{background:#6366f133;color:#818cf8;border:1px solid #6366f155;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
-
-/* Settings panel */
+/* Settings */
 .settings-panel{position:fixed;top:0;right:0;bottom:0;width:300px;background:#0f172a;border-left:1px solid rgba(255,255,255,0.1);z-index:200;padding:24px 20px;display:flex;flex-direction:column;gap:16px;transform:translateX(100%);transition:transform 0.3s;}
 .settings-panel.open{transform:translateX(0);}
 .settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;display:none;}
 .settings-overlay.open{display:block;}
 .settings-title{font-size:16px;font-weight:700;color:#fff;display:flex;justify-content:space-between;align-items:center;}
-.settings-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;cursor:pointer;padding:0;}
-.settings-section{display:flex;flex-direction:column;gap:8px;}
-.settings-label{font-size:12px;color:rgba(255,255,255,0.4);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
-.settings-key-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;color:#f1f5f9;font-size:12px;font-family:monospace;outline:none;width:100%;}
-.settings-key-input:focus{border-color:#6366f1;}
-.settings-update-btn{background:#6366f133;border:1px solid #6366f1;border-radius:8px;color:#818cf8;padding:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.settings-update-btn:hover{background:#6366f155;}
-.settings-clear-btn{background:rgba(251,113,133,0.1);border:1px solid rgba(251,113,133,0.3);border-radius:8px;color:#fb7185;padding:9px;font-size:13px;font-weight:600;cursor:pointer;}
+.settings-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;cursor:pointer;}
+.s-label{font-size:11px;color:rgba(255,255,255,0.4);font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+.s-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;color:#f1f5f9;font-size:12px;font-family:monospace;outline:none;}
+.s-input:focus{border-color:#6366f1;}
+.s-btn{width:100%;border-radius:8px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid;transition:all 0.2s;}
 .key-status{font-size:12px;padding:6px 10px;border-radius:8px;text-align:center;}
 .key-status.ok{background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.2);}
 .key-status.missing{background:rgba(251,113,133,0.1);color:#fb7185;border:1px solid rgba(251,113,133,0.2);}
@@ -100,55 +87,47 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </head>
 <body>
 
-<!-- Key Setup Screen -->
 <div id="keyScreen" class="key-screen" style="display:none;">
   <div class="key-logo">📺</div>
   <div class="key-title">BARLOW CHANNEL</div>
-  <div class="key-sub">Your personal live news app.<br/>Enter your free Gemini API key to get started.</div>
+  <div class="key-sub">Enter your free NewsData.io API key<br/>to get real live news on your phone.</div>
   <div class="key-card">
-    <div class="key-steps">
-      <div class="key-step"><div class="key-step-num">1</div><span>Go to <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#818cf8;">aistudio.google.com/apikey</a></span></div>
-      <div class="key-step"><div class="key-step-num">2</div><span>Sign in with Google → click <strong style="color:#fff">Create API Key</strong></span></div>
-      <div class="key-step"><div class="key-step-num">3</div><span>Copy the key (starts with <strong style="color:#fbbf24">AIza...</strong> or <strong style="color:#fbbf24">AQA...</strong>) and paste below</span></div>
+    <div>
+      <div class="key-step"><div class="key-step-num">1</div><span>Go to <a href="https://newsdata.io/register" target="_blank">newsdata.io/register</a> — free signup</span></div>
+      <div class="key-step"><div class="key-step-num">2</div><span>After login, copy your API key from the dashboard</span></div>
+      <div class="key-step"><div class="key-step-num">3</div><span>Paste it below — starts with <strong style="color:#fbbf24">pub_</strong></span></div>
     </div>
     <div>
-      <div class="key-label">Gemini API Key</div>
+      <div class="key-label">NewsData.io API Key</div>
       <div class="key-input-wrap">
-        <input class="key-input" id="keyInput" type="password" placeholder="Paste your API key here…" oninput="onKeyInput()"/>
-        <button class="key-toggle" id="keyToggle" onclick="toggleKeyVisibility()">👁</button>
+        <input class="key-input" id="keyInput" type="password" placeholder="pub_xxxxxxxxxxxxxxxx" oninput="onKeyInput()"/>
+        <button class="key-toggle" onclick="toggleVis('keyInput')">👁</button>
       </div>
     </div>
     <div id="keyError" class="key-error" style="display:none;"></div>
     <button class="key-save-btn" id="keySaveBtn" onclick="saveKey()" disabled>Start Watching →</button>
-    <div class="key-hint">Your key is stored only on this device.<br/>It is never uploaded or shared.</div>
+    <div class="key-hint">Free plan: 200 requests/day<br/>Key stored only on this device — never shared.</div>
   </div>
 </div>
 
-<!-- Settings Overlay -->
 <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
 <div class="settings-panel" id="settingsPanel">
-  <div class="settings-title">
-    <span>⚙ Settings</span>
-    <button class="settings-close" onclick="closeSettings()">×</button>
-  </div>
-  <div class="settings-section">
-    <div class="settings-label">API Key Status</div>
-    <div class="key-status ok" id="keyStatusBadge">● Key saved</div>
-  </div>
-  <div class="settings-section">
-    <div class="settings-label">Update Gemini API Key</div>
-    <div class="key-input-wrap">
-      <input class="settings-key-input" id="settingsKeyInput" type="password" placeholder="Paste new key…"/>
-      <button class="key-toggle" onclick="toggleSettingsKeyVisibility()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:16px;">👁</button>
+  <div class="settings-title"><span>⚙ Settings</span><button class="settings-close" onclick="closeSettings()">×</button></div>
+  <div><div class="s-label">API Key Status</div><div class="key-status ok" id="keyStatusBadge">● Key saved</div></div>
+  <div>
+    <div class="s-label">Update API Key</div>
+    <div class="key-input-wrap" style="position:relative;">
+      <input class="s-input" id="settingsKeyInput" type="password" placeholder="Paste new key…" style="padding-right:36px;"/>
+      <button onclick="toggleVis('settingsKeyInput')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:14px;">👁</button>
     </div>
-    <button class="settings-update-btn" onclick="updateKey()">✓ Update Key</button>
+    <br/>
+    <button class="s-btn" style="background:#6366f122;border-color:#6366f1;color:#818cf8;" onclick="updateKey()">✓ Update Key</button>
   </div>
-  <div class="settings-section" style="margin-top:auto;">
-    <button class="settings-clear-btn" onclick="clearKey()">✕ Remove Key & Sign Out</button>
+  <div style="margin-top:auto;">
+    <button class="s-btn" style="background:rgba(251,113,133,0.1);border-color:rgba(251,113,133,0.3);color:#fb7185;" onclick="clearKey()">✕ Remove Key & Sign Out</button>
   </div>
 </div>
 
-<!-- Main App -->
 <div class="tab-bg" id="app" style="display:none;">
   <div class="header">
     <div style="display:flex;align-items:center;">
@@ -163,10 +142,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="ticker-wrap"><span class="ticker-inner" id="ticker"></span></div>
   <div class="install-bar" id="installBar" style="display:none;">
-    <div>
-      <p>📲 Install Barlow Channel</p>
-      <span>Add to your home screen for the full app experience</span>
-    </div>
+    <div><p>📲 Install Barlow Channel</p><span>Add to your home screen</span></div>
     <button class="install-btn-bar" onclick="triggerInstall()">Install</button>
   </div>
   <div class="search-row">
@@ -179,98 +155,53 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 const TABS=[
-  {id:"world",label:"World",icon:"🌍",color:"#6366f1",bg:"linear-gradient(135deg,#1e1b4b 0%,#312e81 40%,#1e3a5f 100%)"},
-  {id:"finance",label:"Finance",icon:"💹",color:"#10b981",bg:"linear-gradient(135deg,#052e16 0%,#064e3b 40%,#0c4a6e 100%)"},
-  {id:"nba",label:"NBA",icon:"🏀",color:"#f59e0b",bg:"linear-gradient(135deg,#1c1400 0%,#451a03 40%,#7c2d12 100%)"},
-  {id:"entertainment",label:"Entertainment",icon:"🎬",color:"#ec4899",bg:"linear-gradient(135deg,#2d0f2f 0%,#500724 40%,#1e1b4b 100%)"},
-  {id:"audio",label:"Audio",icon:"🔊",color:"#0ea5e9",bg:"linear-gradient(135deg,#0c1445 0%,#0369a1 40%,#164e63 100%)"},
-  {id:"video",label:"Video",icon:"🎥",color:"#f43f5e",bg:"linear-gradient(135deg,#1f0a15 0%,#881337 40%,#3b0764 100%)"},
+  {id:"world",label:"World",icon:"🌍",color:"#6366f1",bg:"linear-gradient(135deg,#1e1b4b 0%,#312e81 40%,#1e3a5f 100%)",q:"world,international,politics"},
+  {id:"finance",label:"Finance",icon:"💹",color:"#10b981",bg:"linear-gradient(135deg,#052e16 0%,#064e3b 40%,#0c4a6e 100%)",q:"finance,markets,economy,stocks"},
+  {id:"nba",label:"NBA",icon:"🏀",color:"#f59e0b",bg:"linear-gradient(135deg,#1c1400 0%,#451a03 40%,#7c2d12 100%)",q:"NBA,basketball"},
+  {id:"entertainment",label:"Entertainment",icon:"🎬",color:"#ec4899",bg:"linear-gradient(135deg,#2d0f2f 0%,#500724 40%,#1e1b4b 100%)",q:"movies,books,series,entertainment"},
+  {id:"audio",label:"Audio",icon:"🔊",color:"#0ea5e9",bg:"linear-gradient(135deg,#0c1445 0%,#0369a1 40%,#164e63 100%)",q:"top,news,breaking"},
+  {id:"video",label:"Video",icon:"🎥",color:"#f43f5e",bg:"linear-gradient(135deg,#1f0a15 0%,#881337 40%,#3b0764 100%)",q:"news,video,world"},
 ];
-const CAT_COLORS={Politics:"#818cf8",Economy:"#38bdf8",Climate:"#34d399",Tech:"#fbbf24",Health:"#f472b6",Conflict:"#fb7185",Markets:"#38bdf8",Crypto:"#fbbf24",Banking:"#818cf8",Commodities:"#34d399",Game:"#fbbf24",Trade:"#f472b6",Standings:"#818cf8",Player:"#34d399",Draft:"#38bdf8",Book:"#c084fc",Movie:"#38bdf8",Series:"#fbbf24",World:"#38bdf8",Finance:"#34d399"};
+const CAT_COLORS={politics:"#818cf8",business:"#38bdf8",technology:"#fbbf24",health:"#f472b6",sports:"#34d399",entertainment:"#c084fc",science:"#38bdf8",environment:"#34d399",world:"#818cf8",top:"#fb7185"};
 const TICKER_ITEMS=["S&P 500: 5,312 ▲0.4%","NASDAQ: 16,742 ▲0.7%","DOW: 38,904 ▲0.2%","Nikkei: 38,230 ▼0.1%","BTC: $67,420 ▲1.2%","ETH: $3,540 ▲0.8%","EUR/USD: 1.0841","Gold: $2,324/oz ▲0.3%","Oil WTI: $78.42 ▼0.5%"];
-const today=new Date().toDateString();
-const PROMPTS={
-  world:`You are a news editor. Use Google Search to find the top 6 international news headlines from today ${today}. Return ONLY a valid JSON array, no markdown fences, no explanation before or after. Format: [{"title":"...","summary":"2-3 sentence summary","source":"outlet name","url":"https://...","category":"Politics","time":"2 hours ago"}]`,
-  finance:`You are a finance editor. Use Google Search to find the top 6 finance and market news stories from today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets","time":"1 hour ago"}]`,
-  nba:`You are an NBA editor. Use Google Search to find the latest 6 NBA stories from today ${today} — scores, trades, players. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Game","time":"3 hours ago"}]`,
-  entertainment:`You are an entertainment editor. Use Google Search to find 6 current book, movie or series recommendations. Mix 2 books, 2 movies, 2 series. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentence review","source":"...","url":"https://...","category":"Movie","rating":"8.5/10","time":"1 day ago"}]`,
-  audio:`You are a news broadcaster. Use Google Search to find the top 5 news headlines from today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","script":"Write a 3-4 sentence script a broadcaster would read aloud","source":"...","url":"https://...","duration":"45 sec","category":"World"}]`,
-  video:`You are a video news editor. Use Google Search to find 6 top news videos from YouTube or news sites today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2 sentences","source":"...","channel":"BBC","duration":"3:24","url":"https://..."}]`,
-};
 
+let NEWS_API_KEY='';
+const KEY_STORAGE='barlow_news_key';
 let state={tab:"world",cache:{},loading:{},errors:{},bookmarks:[],search:"",showSaved:false,playing:null,autoRefresh:true,lastRefresh:{}};
 let inFlight={},deferredPrompt=null,autoTimer=null;
-let GEMINI_API_KEY='';
 
-// ---- Key Management ----
-const KEY_STORAGE='barlow_gemini_key';
-
-function loadKey(){
-  const k=localStorage.getItem(KEY_STORAGE)||'';
-  GEMINI_API_KEY=k;
-  return k;
-}
-function onKeyInput(){
-  const v=document.getElementById('keyInput').value.trim();
-  document.getElementById('keySaveBtn').disabled=v.length<10;
-  document.getElementById('keyError').style.display='none';
-}
-function toggleKeyVisibility(){
-  const inp=document.getElementById('keyInput');
-  inp.type=inp.type==='password'?'text':'password';
-}
-function toggleSettingsKeyVisibility(){
-  const inp=document.getElementById('settingsKeyInput');
-  inp.type=inp.type==='password'?'text':'password';
-}
+// Key management
+function loadKey(){const k=localStorage.getItem(KEY_STORAGE)||'';NEWS_API_KEY=k;return k;}
+function onKeyInput(){const v=document.getElementById('keyInput').value.trim();document.getElementById('keySaveBtn').disabled=v.length<8;document.getElementById('keyError').style.display='none';}
+function toggleVis(id){const el=document.getElementById(id);el.type=el.type==='password'?'text':'password';}
 function saveKey(){
   const k=document.getElementById('keyInput').value.trim();
-  if(k.length<10){document.getElementById('keyError').textContent='Key too short. Please paste the full key.';document.getElementById('keyError').style.display='block';return;}
-  localStorage.setItem(KEY_STORAGE,k);
-  GEMINI_API_KEY=k;
-  bootApp();
+  if(!k.startsWith('pub_')){document.getElementById('keyError').textContent='Key must start with pub_ — check newsdata.io dashboard.';document.getElementById('keyError').style.display='block';return;}
+  localStorage.setItem(KEY_STORAGE,k);NEWS_API_KEY=k;bootApp();
 }
 function updateKey(){
   const k=document.getElementById('settingsKeyInput').value.trim();
-  if(k.length<10){alert('Key too short. Please paste the full key.');return;}
-  localStorage.setItem(KEY_STORAGE,k);
-  GEMINI_API_KEY=k;
-  state.cache={};
+  if(k.length<8){alert('Please paste a valid key.');return;}
+  localStorage.setItem(KEY_STORAGE,k);NEWS_API_KEY=k;state.cache={};
   document.getElementById('settingsKeyInput').value='';
-  closeSettings();
-  loadTab(state.tab,true);
-  alert('API key updated! Refreshing news...');
+  closeSettings();loadTab(state.tab,true);
 }
-function clearKey(){
-  if(!confirm('Remove your API key and return to setup screen?')) return;
-  localStorage.removeItem(KEY_STORAGE);
-  GEMINI_API_KEY='';
-  location.reload();
-}
+function clearKey(){if(!confirm('Remove key and return to setup?'))return;localStorage.removeItem(KEY_STORAGE);location.reload();}
 function openSettings(){
   const k=localStorage.getItem(KEY_STORAGE)||'';
-  document.getElementById('keyStatusBadge').textContent=k?'● Key saved':'● No key saved';
+  document.getElementById('keyStatusBadge').textContent=k?'● Key saved':'● No key';
   document.getElementById('keyStatusBadge').className='key-status '+(k?'ok':'missing');
   document.getElementById('settingsPanel').classList.add('open');
   document.getElementById('settingsOverlay').classList.add('open');
 }
-function closeSettings(){
-  document.getElementById('settingsPanel').classList.remove('open');
-  document.getElementById('settingsOverlay').classList.remove('open');
-}
+function closeSettings(){document.getElementById('settingsPanel').classList.remove('open');document.getElementById('settingsOverlay').classList.remove('open');}
 
-function bootApp(){
-  document.getElementById('keyScreen').style.display='none';
-  document.getElementById('app').style.display='block';
-  initApp();
-}
-
-// ---- PWA ----
+// PWA
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').style.display='flex';});
 window.addEventListener('appinstalled',()=>{document.getElementById('installBar').style.display='none';});
 function triggerInstall(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBar').style.display='none';});}}
 
-// ---- Ticker ----
+// Ticker
 function initTicker(){
   const t=TICKER_ITEMS.join('   •   ');
   const el=document.getElementById('ticker');
@@ -280,67 +211,45 @@ function initTicker(){
   requestAnimationFrame(step);
 }
 
-// ---- Gemini Fetch ----
+// NewsData.io fetch — works perfectly from browsers/mobile
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function fetchNews(tab,attempt=0){
+
+async function fetchNews(tab, attempt=0){
   try{
-    const payload={
-      contents:[{role:'user',parts:[{text:PROMPTS[tab]}]}],
-      tools:[{googleSearch:{}}],
-      generationConfig:{temperature:0.3,maxOutputTokens:2048}
-    };
+    const tabInfo=TABS.find(t=>t.id===tab);
+    const q=encodeURIComponent(tabInfo.q);
+    const url=`https://newsdata.io/api/1/news?apikey=${NEWS_API_KEY}&q=${q}&language=en&size=8`;
+    const res=await fetch(url);
 
-    // Try direct call first, fall back to CORS proxies
-    const endpoints=[
-      ()=>fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
-      ()=>fetch(`https://corsproxy.io/?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
-      ()=>fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
-    ];
-
-    let res=null, lastErr=null;
-    for(const fn of endpoints){
-      try{
-        res=await Promise.race([fn(), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),15000))]);
-        if(res&&res.ok) break;
-        if(res&&(res.status===400||res.status===401||res.status===403)) break;
-      }catch(e){ lastErr=e; res=null; }
-    }
-
-    if(!res) throw new Error(lastErr?.message||'Could not reach API. Try again.');
-
-    if(res.status===429){
-      if(attempt<3){await sleep((attempt+1)*10000);return fetchNews(tab,attempt+1);}
+    if(res.status===429||res.status===422){
+      if(attempt<2){await sleep((attempt+1)*5000);return fetchNews(tab,attempt+1);}
       throw new Error('Rate limit reached. Please wait a minute.');
     }
-    if(res.status===400||res.status===401||res.status===403){
-      const errData=await res.json().catch(()=>({}));
-      const msg=errData?.error?.message||'';
-      throw new Error(`Invalid API key${msg?' — '+msg:''}. Tap ⚙ to update it.`);
-    }
+    if(res.status===401||res.status===403) throw new Error('Invalid API key. Tap ⚙ to update it.');
     if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
 
     const data=await res.json();
-    const parts=data?.candidates?.[0]?.content?.parts||[];
-    const text=parts.filter(p=>p.text).map(p=>p.text).join('');
-    if(!text){
-      const reason=data?.candidates?.[0]?.finishReason;
-      throw new Error(reason==='SAFETY'?'Blocked by safety filter. Try refreshing.':'Empty response. Try refreshing.');
-    }
-    const cleaned=text.replace(/```json|```/g,'').trim();
-    const match=cleaned.match(/\[[\s\S]*\]/);
-    if(!match) throw new Error('Could not parse response. Try refreshing.');
-    const parsed=JSON.parse(match[0]);
-    if(!Array.isArray(parsed)||parsed.length===0) throw new Error('No articles found. Try refreshing.');
-    return parsed;
+    if(data.status==='error') throw new Error(data.results?.message||'API error. Check your key.');
+    if(!data.results||data.results.length===0) throw new Error('No articles found. Try refreshing.');
 
+    return data.results.slice(0,8).map(a=>({
+      title: a.title||'Untitled',
+      summary: a.description||a.content?.slice(0,200)||'No description available.',
+      source: a.source_id||a.source_name||'Unknown',
+      url: a.link||`https://www.google.com/search?q=${encodeURIComponent(a.title||'')}`,
+      category: (a.category?.[0]||'news'),
+      time: a.pubDate?new Date(a.pubDate).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'',
+      image: a.image_url||null,
+      script: a.description||a.title||'',
+    }));
   }catch(e){
-    throw new Error(e.message||'Unknown error. Try again.');
+    throw new Error(e.message||'Could not load news.');
   }
 }
 
-// ---- App Logic ----
+// App
 function renderTabs(){
-  document.getElementById('tabs').innerHTML=TABS.map(t=>`<button class="tab-btn${state.tab===t.id?' active':''}" onclick="switchTab('${t.id}')" style="${state.tab===t.id?`background:${t.color};box-shadow:0 0 16px ${t.color}66;`:''}"> ${t.icon} ${t.label}</button>`).join('');
+  document.getElementById('tabs').innerHTML=TABS.map(t=>`<button class="tab-btn${state.tab===t.id?' active':''}" onclick="switchTab('${t.id}')" style="${state.tab===t.id?`background:${t.color};box-shadow:0 0 16px ${t.color}66;`:''}">${t.icon} ${t.label}</button>`).join('');
 }
 function switchTab(id){state.tab=id;state.showSaved=false;state.search='';document.getElementById('searchInput').value='';document.getElementById('savedBtn').className='saved-btn';renderTabs();updateBg();loadTab(id);renderContent();}
 function updateBg(){const t=TABS.find(x=>x.id===state.tab);if(t)document.getElementById('app').style.background=t.bg;}
@@ -350,16 +259,13 @@ function updateHeaderColors(){const c=getAccent();document.querySelectorAll('.hd
 async function loadTab(tab,force=false){
   if(inFlight[tab])return;
   if(state.cache[tab]&&!force){renderContent();return;}
-  inFlight[tab]=true;
-  state.loading[tab]=true;state.errors[tab]=null;
+  inFlight[tab]=true;state.loading[tab]=true;state.errors[tab]=null;
   renderContent();
   try{
     const items=await fetchNews(tab);
-    if(!Array.isArray(items)||items.length===0) throw new Error('No articles returned. Try refreshing.');
     state.cache[tab]=items;state.lastRefresh[tab]=new Date();
   }catch(e){state.errors[tab]=e.message;}
-  state.loading[tab]=false;inFlight[tab]=false;
-  renderContent();
+  state.loading[tab]=false;inFlight[tab]=false;renderContent();
 }
 
 function doRefresh(){if(!state.loading[state.tab])loadTab(state.tab,true);}
@@ -382,56 +288,76 @@ function playAudio(title,script){
   window.speechSynthesis?.speak(u);
   state.playing=title;renderContent();
 }
-function badge(cat){const c=CAT_COLORS[cat]||'#94a3b8';return`<span class="badge" style="background:${c}25;color:${c};border:1px solid ${c}55">${cat}</span>`;}
-function safeUrl(url,title){return(url&&url.startsWith('http'))?url:`https://www.google.com/search?q=${encodeURIComponent(title)}`;}
+function badge(cat){
+  const c=CAT_COLORS[cat?.toLowerCase()]||'#94a3b8';
+  return`<span class="badge" style="background:${c}25;color:${c};border:1px solid ${c}55">${cat}</span>`;
+}
 
 function renderContent(){
   updateHeaderColors();
   const acc=getAccent();
   const tab=state.tab;
   const raw=state.showSaved?state.bookmarks:(state.cache[tab]||[]);
-  const items=state.search?raw.filter(i=>(i.title||'').toLowerCase().includes(state.search.toLowerCase())||(i.summary||'').toLowerCase().includes(state.search.toLowerCase())||(i.script||'').toLowerCase().includes(state.search.toLowerCase())):raw;
+  const items=state.search?raw.filter(i=>(i.title||'').toLowerCase().includes(state.search.toLowerCase())||(i.summary||'').toLowerCase().includes(state.search.toLowerCase())):raw;
   const ts=state.lastRefresh[tab];
   const tabInfo=TABS.find(t=>t.id===tab);
   let html='';
   if(ts&&!state.showSaved)html+=`<div style="padding:5px 18px;font-size:11px;color:rgba(255,255,255,0.25);">Updated: ${ts.toLocaleTimeString()}</div>`;
+
   if(state.loading[tab]&&!state.showSaved){
-    html+=`<div class="state-center"><div class="state-icon">${tabInfo?.icon||'📰'}</div><p class="state-title">Fetching latest news…</p><p class="state-sub">Searching the web — takes ~10 seconds</p></div>`;
+    html+=`<div class="state-center"><div class="state-icon">${tabInfo?.icon||'📰'}</div><p class="state-title">Loading news…</p><p class="state-sub">Fetching live articles</p></div>`;
   }else if(state.errors[tab]&&!state.showSaved){
     html+=`<div class="state-center"><p style="color:#fb7185;font-size:14px;">⚠ ${state.errors[tab]}</p><button class="retry-btn" style="background:${acc}22;border-color:${acc};color:${acc}" onclick="loadTab('${tab}',true)">⟳ Try Again</button></div>`;
   }else if(items.length===0){
-    html+=`<div class="state-center"><p class="state-title" style="color:rgba(255,255,255,0.35)">${state.showSaved?'No saved articles yet. Star any article to save it.':'No results found.'}</p></div>`;
+    html+=`<div class="state-center"><p class="state-title" style="color:rgba(255,255,255,0.35)">${state.showSaved?'No saved articles yet.':'No results found.'}</p></div>`;
   }else if(tab==='audio'&&!state.showSaved){
     html+='<div class="cards">'+items.map(item=>{
       const playing=state.playing===item.title;
-      return`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>${item.category?badge(item.category):''}</div><p class="card-summary" style="font-style:italic">"${item.script||''}"</p><div style="display:flex;align-items:center;gap:12px"><button class="play-btn" style="background:${playing?'#fb718522':acc+'22'};color:${playing?'#fb7185':acc};border-color:${playing?'#fb7185':acc}" onclick="playAudio('${item.title.replace(/'/g,"\\'")}',\`${(item.script||'').replace(/`/g,'\\`')}\`)">${playing?'⏹ Stop':'▶ Play'}</button><span style="font-size:12px;color:rgba(255,255,255,0.3)">${item.duration||''} · ${item.source||''}</span></div></div>`;
+      const safeTitle=item.title.replace(/'/g,"\\'");
+      const safeScript=(item.script||item.summary||'').replace(/`/g,'\\`').replace(/'/g,"\\'");
+      return`<div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <a class="card-title" href="${item.url}" target="_blank" style="color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
+          ${badge(item.category)}
+        </div>
+        <p class="card-summary" style="font-style:italic">"${item.summary||''}"</p>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="play-btn" style="background:${playing?'#fb718522':acc+'22'};color:${playing?'#fb7185':acc};border-color:${playing?'#fb7185':acc}" onclick="playAudio('${safeTitle}',\`${safeScript}\`)">${playing?'⏹ Stop':'▶ Play'}</button>
+          <span style="font-size:12px;color:rgba(255,255,255,0.3)">${item.source} · ${item.time}</span>
+        </div>
+      </div>`;
     }).join('')+'</div>';
-  }else if(tab==='video'&&!state.showSaved){
-    html+='<div class="video-grid">'+items.map(item=>`<div class="card" style="padding:0;overflow:hidden"><a class="vid-thumb" href="${safeUrl(item.url,item.title)}" target="_blank" style="background:${acc}22"><div class="play-circle" style="background:${acc}44;border-color:${acc}">▶</div>${item.duration?`<span class="vid-dur">${item.duration}</span>`:''} ${item.channel?`<span class="vid-ch" style="background:${acc}cc">${item.channel}</span>`:''}</a><div class="vid-body"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="font-size:13px;color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a><p style="margin:0;font-size:12px;color:rgba(255,255,255,0.4)">${item.summary||''}</p></div></div>`).join('')+'</div>';
   }else{
     html+='<div class="cards">'+items.map(item=>{
       const bm=isBookmarked(item.title);
-      return`<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" onmouseover="this.style.color='${acc}'" onmouseout="this.style.color='#f1f5f9'">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a><button class="bookmark-btn ${bm?'active':''}" onclick="toggleBookmark('${item.title.replace(/'/g,"\\'")}')"> ${bm?'★':'☆'}</button></div><p class="card-summary">${item.summary||''}</p><div class="card-footer">${item.category?badge(item.category):''}${item.rating?`<span style="font-size:12px;color:#fbbf24;font-weight:600">★ ${item.rating}</span>`:''}<span class="card-meta">${item.source||''}${item.time?` · ${item.time}`:''}</span></div></div>`;
+      const safeTitle=item.title.replace(/'/g,"\\'");
+      return`<div class="card">
+        ${item.image?`<img src="${item.image}" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:2px;" onerror="this.style.display='none'" loading="lazy"/>` :''}
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <a class="card-title" href="${item.url}" target="_blank" onmouseover="this.style.color='${acc}'" onmouseout="this.style.color='#f1f5f9'">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
+          <button class="bookmark-btn ${bm?'active':''}" onclick="toggleBookmark('${safeTitle}')">${bm?'★':'☆'}</button>
+        </div>
+        <p class="card-summary">${item.summary||''}</p>
+        <div class="card-footer">
+          ${badge(item.category)}
+          <span class="card-meta">${item.source} · ${item.time}</span>
+        </div>
+      </div>`;
     }).join('')+'</div>';
   }
   document.getElementById('content').innerHTML=html;
 }
 
-function initApp(){
-  initTicker();
-  updateBg();renderTabs();renderContent();loadTab('world');
+function bootApp(){
+  document.getElementById('keyScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  initTicker();updateBg();renderTabs();renderContent();loadTab('world');
   autoTimer=setInterval(()=>loadTab(state.tab,true),600000);
 }
 
-// ---- Boot ----
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
-
 const savedKey=loadKey();
-if(savedKey){
-  bootApp();
-}else{
-  document.getElementById('keyScreen').style.display='flex';
-}
+if(savedKey){bootApp();}else{document.getElementById('keyScreen').style.display='flex';}
 </script>
 </body>
 </html>

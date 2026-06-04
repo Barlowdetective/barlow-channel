@@ -56,10 +56,100 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .state-title{font-size:15px;color:rgba(255,255,255,0.7);font-weight:500;}
 .state-sub{font-size:12px;color:rgba(255,255,255,0.3);}
 .retry-btn{margin-top:8px;border-radius:10px;padding:9px 22px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;}
+
+/* Key Setup Screen */
+.key-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px;background:linear-gradient(135deg,#0d1b3e 0%,#0f2460 50%,#1a0a3c 100%);}
+.key-logo{font-size:52px;margin-bottom:8px;}
+.key-title{font-size:24px;font-weight:800;color:#fff;letter-spacing:1px;margin-bottom:6px;}
+.key-sub{font-size:14px;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:32px;line-height:1.6;}
+.key-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;display:flex;flex-direction:column;gap:16px;}
+.key-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:4px;}
+.key-input-wrap{position:relative;}
+.key-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:13px 48px 13px 16px;color:#f1f5f9;font-size:14px;outline:none;-webkit-appearance:none;transition:border-color 0.2s;font-family:monospace;}
+.key-input:focus{border-color:#6366f1;}
+.key-input::placeholder{color:rgba(255,255,255,0.2);font-family:-apple-system,sans-serif;}
+.key-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:18px;padding:0;}
+.key-save-btn{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity 0.2s;letter-spacing:0.5px;}
+.key-save-btn:hover{opacity:0.9;}
+.key-save-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.key-error{font-size:13px;color:#fb7185;text-align:center;padding:8px 12px;background:rgba(251,113,133,0.1);border-radius:8px;border:1px solid rgba(251,113,133,0.2);}
+.key-hint{font-size:12px;color:rgba(255,255,255,0.3);text-align:center;line-height:1.6;}
+.key-hint a{color:#818cf8;text-decoration:none;}
+.key-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:4px;}
+.key-step{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,0.5);}
+.key-step-num{background:#6366f133;color:#818cf8;border:1px solid #6366f155;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* Settings panel */
+.settings-panel{position:fixed;top:0;right:0;bottom:0;width:300px;background:#0f172a;border-left:1px solid rgba(255,255,255,0.1);z-index:200;padding:24px 20px;display:flex;flex-direction:column;gap:16px;transform:translateX(100%);transition:transform 0.3s;}
+.settings-panel.open{transform:translateX(0);}
+.settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;display:none;}
+.settings-overlay.open{display:block;}
+.settings-title{font-size:16px;font-weight:700;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+.settings-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;cursor:pointer;padding:0;}
+.settings-section{display:flex;flex-direction:column;gap:8px;}
+.settings-label{font-size:12px;color:rgba(255,255,255,0.4);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+.settings-key-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;color:#f1f5f9;font-size:12px;font-family:monospace;outline:none;width:100%;}
+.settings-key-input:focus{border-color:#6366f1;}
+.settings-update-btn{background:#6366f133;border:1px solid #6366f1;border-radius:8px;color:#818cf8;padding:9px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.settings-update-btn:hover{background:#6366f155;}
+.settings-clear-btn{background:rgba(251,113,133,0.1);border:1px solid rgba(251,113,133,0.3);border-radius:8px;color:#fb7185;padding:9px;font-size:13px;font-weight:600;cursor:pointer;}
+.key-status{font-size:12px;padding:6px 10px;border-radius:8px;text-align:center;}
+.key-status.ok{background:rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.2);}
+.key-status.missing{background:rgba(251,113,133,0.1);color:#fb7185;border:1px solid rgba(251,113,133,0.2);}
 </style>
 </head>
 <body>
-<div class="tab-bg" id="app">
+
+<!-- Key Setup Screen -->
+<div id="keyScreen" class="key-screen" style="display:none;">
+  <div class="key-logo">📺</div>
+  <div class="key-title">BARLOW CHANNEL</div>
+  <div class="key-sub">Your personal live news app.<br/>Enter your free Gemini API key to get started.</div>
+  <div class="key-card">
+    <div class="key-steps">
+      <div class="key-step"><div class="key-step-num">1</div><span>Go to <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#818cf8;">aistudio.google.com/apikey</a></span></div>
+      <div class="key-step"><div class="key-step-num">2</div><span>Sign in with Google → click <strong style="color:#fff">Create API Key</strong></span></div>
+      <div class="key-step"><div class="key-step-num">3</div><span>Copy the key (starts with <strong style="color:#fbbf24">AIza...</strong> or <strong style="color:#fbbf24">AQA...</strong>) and paste below</span></div>
+    </div>
+    <div>
+      <div class="key-label">Gemini API Key</div>
+      <div class="key-input-wrap">
+        <input class="key-input" id="keyInput" type="password" placeholder="Paste your API key here…" oninput="onKeyInput()"/>
+        <button class="key-toggle" id="keyToggle" onclick="toggleKeyVisibility()">👁</button>
+      </div>
+    </div>
+    <div id="keyError" class="key-error" style="display:none;"></div>
+    <button class="key-save-btn" id="keySaveBtn" onclick="saveKey()" disabled>Start Watching →</button>
+    <div class="key-hint">Your key is stored only on this device.<br/>It is never uploaded or shared.</div>
+  </div>
+</div>
+
+<!-- Settings Overlay -->
+<div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-title">
+    <span>⚙ Settings</span>
+    <button class="settings-close" onclick="closeSettings()">×</button>
+  </div>
+  <div class="settings-section">
+    <div class="settings-label">API Key Status</div>
+    <div class="key-status ok" id="keyStatusBadge">● Key saved</div>
+  </div>
+  <div class="settings-section">
+    <div class="settings-label">Update Gemini API Key</div>
+    <div class="key-input-wrap">
+      <input class="settings-key-input" id="settingsKeyInput" type="password" placeholder="Paste new key…"/>
+      <button class="key-toggle" onclick="toggleSettingsKeyVisibility()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:16px;">👁</button>
+    </div>
+    <button class="settings-update-btn" onclick="updateKey()">✓ Update Key</button>
+  </div>
+  <div class="settings-section" style="margin-top:auto;">
+    <button class="settings-clear-btn" onclick="clearKey()">✕ Remove Key & Sign Out</button>
+  </div>
+</div>
+
+<!-- Main App -->
+<div class="tab-bg" id="app" style="display:none;">
   <div class="header">
     <div style="display:flex;align-items:center;">
       <span class="logo">📺 BARLOW CHANNEL</span>
@@ -68,11 +158,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="hdr-btns">
       <button class="hdr-btn" id="autoBtn" onclick="toggleAuto()">⟳ Auto ON</button>
       <button class="hdr-btn" id="refreshBtn" onclick="doRefresh()">⟳ Refresh</button>
+      <button class="hdr-btn" onclick="openSettings()" style="font-size:14px;padding:4px 9px;">⚙</button>
     </div>
   </div>
-
   <div class="ticker-wrap"><span class="ticker-inner" id="ticker"></span></div>
-
   <div class="install-bar" id="installBar" style="display:none;">
     <div>
       <p>📲 Install Barlow Channel</p>
@@ -80,12 +169,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <button class="install-btn-bar" onclick="triggerInstall()">Install</button>
   </div>
-
   <div class="search-row">
     <input class="search-input" id="searchInput" placeholder="🔍  Search articles..." oninput="onSearch()"/>
     <button class="saved-btn" id="savedBtn" onclick="toggleSaved()">★ Saved</button>
   </div>
-
   <div class="tabs" id="tabs"></div>
   <div id="content"></div>
 </div>
@@ -103,8 +190,8 @@ const CAT_COLORS={Politics:"#818cf8",Economy:"#38bdf8",Climate:"#34d399",Tech:"#
 const TICKER_ITEMS=["S&P 500: 5,312 ▲0.4%","NASDAQ: 16,742 ▲0.7%","DOW: 38,904 ▲0.2%","Nikkei: 38,230 ▼0.1%","BTC: $67,420 ▲1.2%","ETH: $3,540 ▲0.8%","EUR/USD: 1.0841","Gold: $2,324/oz ▲0.3%","Oil WTI: $78.42 ▼0.5%"];
 const today=new Date().toDateString();
 const PROMPTS={
-  world:`Search the web for the top 6 international news headlines today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Politics|Economy|Climate|Tech|Health|Conflict","time":"X hours ago"}`,
-  finance:`Search the web for top 6 finance/market news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets|Crypto|Economy|Banking|Commodities","time":"X hours ago"}`,
+  world:`Search the web for the top 6 international news headlines today (${today}). Return ONLY a raw JSON array, no markdown, no explanation. Each object: {"title":"...","summary":"2-3 sentences","source":"outlet name","url":"https://...","category":"Politics|Economy|Climate|Tech|Health|Conflict","time":"X hours ago"}`,
+  finance:`Search the web for top 6 finance and market news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets|Crypto|Economy|Banking|Commodities","time":"X hours ago"}`,
   nba:`Search the web for latest 6 NBA news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Game|Trade|Standings|Player|Draft","time":"X hours ago"}`,
   entertainment:`Search the web for 6 books/movies/series recommendations today (${today}). Mix 2 books,2 movies,2 series. Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentence review","source":"...","url":"https://...","category":"Book|Movie|Series","rating":"X/10","time":"X days ago"}`,
   audio:`Search the web for top 5 news headlines today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","script":"3-4 sentence broadcaster script","source":"...","url":"https://...","duration":"~45 sec","category":"World|Finance|Tech|Health|Politics"}`,
@@ -113,21 +200,119 @@ const PROMPTS={
 
 let state={tab:"world",cache:{},loading:{},errors:{},bookmarks:[],search:"",showSaved:false,playing:null,autoRefresh:true,lastRefresh:{}};
 let inFlight={},deferredPrompt=null,autoTimer=null;
+let GEMINI_API_KEY='';
 
+// ---- Key Management ----
+const KEY_STORAGE='barlow_gemini_key';
+
+function loadKey(){
+  const k=localStorage.getItem(KEY_STORAGE)||'';
+  GEMINI_API_KEY=k;
+  return k;
+}
+function onKeyInput(){
+  const v=document.getElementById('keyInput').value.trim();
+  document.getElementById('keySaveBtn').disabled=v.length<10;
+  document.getElementById('keyError').style.display='none';
+}
+function toggleKeyVisibility(){
+  const inp=document.getElementById('keyInput');
+  inp.type=inp.type==='password'?'text':'password';
+}
+function toggleSettingsKeyVisibility(){
+  const inp=document.getElementById('settingsKeyInput');
+  inp.type=inp.type==='password'?'text':'password';
+}
+function saveKey(){
+  const k=document.getElementById('keyInput').value.trim();
+  if(k.length<10){document.getElementById('keyError').textContent='Key too short. Please paste the full key.';document.getElementById('keyError').style.display='block';return;}
+  localStorage.setItem(KEY_STORAGE,k);
+  GEMINI_API_KEY=k;
+  bootApp();
+}
+function updateKey(){
+  const k=document.getElementById('settingsKeyInput').value.trim();
+  if(k.length<10){alert('Key too short. Please paste the full key.');return;}
+  localStorage.setItem(KEY_STORAGE,k);
+  GEMINI_API_KEY=k;
+  state.cache={};
+  document.getElementById('settingsKeyInput').value='';
+  closeSettings();
+  loadTab(state.tab,true);
+  alert('API key updated! Refreshing news...');
+}
+function clearKey(){
+  if(!confirm('Remove your API key and return to setup screen?')) return;
+  localStorage.removeItem(KEY_STORAGE);
+  GEMINI_API_KEY='';
+  location.reload();
+}
+function openSettings(){
+  const k=localStorage.getItem(KEY_STORAGE)||'';
+  document.getElementById('keyStatusBadge').textContent=k?'● Key saved':'● No key saved';
+  document.getElementById('keyStatusBadge').className='key-status '+(k?'ok':'missing');
+  document.getElementById('settingsPanel').classList.add('open');
+  document.getElementById('settingsOverlay').classList.add('open');
+}
+function closeSettings(){
+  document.getElementById('settingsPanel').classList.remove('open');
+  document.getElementById('settingsOverlay').classList.remove('open');
+}
+
+function bootApp(){
+  document.getElementById('keyScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  initApp();
+}
+
+// ---- PWA ----
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').style.display='flex';});
 window.addEventListener('appinstalled',()=>{document.getElementById('installBar').style.display='none';});
 function triggerInstall(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBar').style.display='none';});}}
 
-// Ticker animation
-(function(){
+// ---- Ticker ----
+function initTicker(){
   const t=TICKER_ITEMS.join('   •   ');
   const el=document.getElementById('ticker');
   el.textContent=t+'   •   '+t+'   •   '+t;
   let x=0;
   function step(){x-=0.5;if(Math.abs(x)>el.scrollWidth/2)x=0;el.style.transform=`translateX(${x}px)`;requestAnimationFrame(step);}
   requestAnimationFrame(step);
-})();
+}
 
+// ---- Gemini Fetch ----
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function fetchNews(tab,attempt=0){
+  try{
+    const res=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          contents:[{parts:[{text:PROMPTS[tab]}]}],
+          tools:[{google_search:{}}],
+          generationConfig:{temperature:0.3,maxOutputTokens:2048}
+        })
+      }
+    );
+    if(res.status===429){if(attempt<3){await sleep((attempt+1)*8000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait a moment.');}
+    if(res.status===400||res.status===401){
+      state.errors[tab]='Invalid API key. Tap ⚙ to update your key.';
+      state.loading[tab]=false;inFlight[tab]=false;
+      renderContent();return[];
+    }
+    if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
+    const data=await res.json();
+    const text=data?.candidates?.[0]?.content?.parts?.filter(p=>p.text)?.map(p=>p.text)?.join('')||'';
+    if(!text) throw new Error('No response from Gemini. Try refreshing.');
+    const match=text.match(/\[[\s\S]*\]/);
+    if(!match) throw new Error('Could not parse news. Try refreshing.');
+    return JSON.parse(match[0]);
+  }catch(e){throw new Error(e.message||'Could not connect. Check your network.');}
+}
+
+// ---- App Logic ----
 function renderTabs(){
   document.getElementById('tabs').innerHTML=TABS.map(t=>`<button class="tab-btn${state.tab===t.id?' active':''}" onclick="switchTab('${t.id}')" style="${state.tab===t.id?`background:${t.color};box-shadow:0 0 16px ${t.color}66;`:''}"> ${t.icon} ${t.label}</button>`).join('');
 }
@@ -135,22 +320,6 @@ function switchTab(id){state.tab=id;state.showSaved=false;state.search='';docume
 function updateBg(){const t=TABS.find(x=>x.id===state.tab);if(t)document.getElementById('app').style.background=t.bg;}
 function getAccent(){return(TABS.find(t=>t.id===state.tab)||{color:'#6366f1'}).color;}
 function updateHeaderColors(){const c=getAccent();document.querySelectorAll('.hdr-btn').forEach(b=>{b.style.borderColor=c;b.style.color=c;});}
-
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function fetchNews(tab,attempt=0){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:PROMPTS[tab]}]})
-  });
-  if(res.status===429){if(attempt<3){await sleep((attempt+1)*8000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait and try again.');}
-  if(!res.ok)throw new Error(`Server error ${res.status}`);
-  const data=await res.json();
-  const text=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-  const match=text.match(/\[[\s\S]*\]/);
-  if(!match)throw new Error('No articles returned. Try refreshing.');
-  return JSON.parse(match[0]);
-}
 
 async function loadTab(tab,force=false){
   if(inFlight[tab])return;
@@ -160,7 +329,7 @@ async function loadTab(tab,force=false){
   renderContent();
   try{
     const items=await fetchNews(tab);
-    if(!Array.isArray(items)||items.length===0)throw new Error('No articles returned. Try refreshing.');
+    if(!Array.isArray(items)||items.length===0) throw new Error('No articles returned. Try refreshing.');
     state.cache[tab]=items;state.lastRefresh[tab]=new Date();
   }catch(e){state.errors[tab]=e.message;}
   state.loading[tab]=false;inFlight[tab]=false;
@@ -187,7 +356,6 @@ function playAudio(title,script){
   window.speechSynthesis?.speak(u);
   state.playing=title;renderContent();
 }
-
 function badge(cat){const c=CAT_COLORS[cat]||'#94a3b8';return`<span class="badge" style="background:${c}25;color:${c};border:1px solid ${c}55">${cat}</span>`;}
 function safeUrl(url,title){return(url&&url.startsWith('http'))?url:`https://www.google.com/search?q=${encodeURIComponent(title)}`;}
 
@@ -201,63 +369,43 @@ function renderContent(){
   const tabInfo=TABS.find(t=>t.id===tab);
   let html='';
   if(ts&&!state.showSaved)html+=`<div style="padding:5px 18px;font-size:11px;color:rgba(255,255,255,0.25);">Updated: ${ts.toLocaleTimeString()}</div>`;
-
   if(state.loading[tab]&&!state.showSaved){
     html+=`<div class="state-center"><div class="state-icon">${tabInfo?.icon||'📰'}</div><p class="state-title">Fetching latest news…</p><p class="state-sub">Searching the web — takes ~10 seconds</p></div>`;
-  } else if(state.errors[tab]&&!state.showSaved){
+  }else if(state.errors[tab]&&!state.showSaved){
     html+=`<div class="state-center"><p style="color:#fb7185;font-size:14px;">⚠ ${state.errors[tab]}</p><button class="retry-btn" style="background:${acc}22;border-color:${acc};color:${acc}" onclick="loadTab('${tab}',true)">⟳ Try Again</button></div>`;
-  } else if(items.length===0){
-    html+=`<div class="state-center"><p class="state-title" style="color:rgba(255,255,255,0.35)">${state.showSaved?'No saved articles yet.':'No results found.'}</p></div>`;
-  } else if(tab==='audio'&&!state.showSaved){
+  }else if(items.length===0){
+    html+=`<div class="state-center"><p class="state-title" style="color:rgba(255,255,255,0.35)">${state.showSaved?'No saved articles yet. Star any article to save it.':'No results found.'}</p></div>`;
+  }else if(tab==='audio'&&!state.showSaved){
     html+='<div class="cards">'+items.map(item=>{
       const playing=state.playing===item.title;
-      return`<div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-          <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
-          ${item.category?badge(item.category):''}
-        </div>
-        <p class="card-summary" style="font-style:italic">"${item.script||''}"</p>
-        <div style="display:flex;align-items:center;gap:12px">
-          <button class="play-btn" style="background:${playing?'#fb718522':acc+'22'};color:${playing?'#fb7185':acc};border-color:${playing?'#fb7185':acc}" onclick="playAudio('${item.title.replace(/'/g,"\\'")}',\`${(item.script||'').replace(/`/g,'\\`')}\`)">${playing?'⏹ Stop':'▶ Play'}</button>
-          <span style="font-size:12px;color:rgba(255,255,255,0.3)">${item.duration||''} · ${item.source||''}</span>
-        </div>
-      </div>`;
+      return`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>${item.category?badge(item.category):''}</div><p class="card-summary" style="font-style:italic">"${item.script||''}"</p><div style="display:flex;align-items:center;gap:12px"><button class="play-btn" style="background:${playing?'#fb718522':acc+'22'};color:${playing?'#fb7185':acc};border-color:${playing?'#fb7185':acc}" onclick="playAudio('${item.title.replace(/'/g,"\\'")}',\`${(item.script||'').replace(/`/g,'\\`')}\`)">${playing?'⏹ Stop':'▶ Play'}</button><span style="font-size:12px;color:rgba(255,255,255,0.3)">${item.duration||''} · ${item.source||''}</span></div></div>`;
     }).join('')+'</div>';
-  } else if(tab==='video'&&!state.showSaved){
-    html+='<div class="video-grid">'+items.map(item=>`<div class="card" style="padding:0;overflow:hidden">
-      <a class="vid-thumb" href="${safeUrl(item.url,item.title)}" target="_blank" style="background:${acc}22">
-        <div class="play-circle" style="background:${acc}44;border-color:${acc}">▶</div>
-        ${item.duration?`<span class="vid-dur">${item.duration}</span>`:''}
-        ${item.channel?`<span class="vid-ch" style="background:${acc}cc">${item.channel}</span>`:''}
-      </a>
-      <div class="vid-body">
-        <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="font-size:13px;color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
-        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.4)">${item.summary||''}</p>
-      </div>
-    </div>`).join('')+'</div>';
-  } else {
+  }else if(tab==='video'&&!state.showSaved){
+    html+='<div class="video-grid">'+items.map(item=>`<div class="card" style="padding:0;overflow:hidden"><a class="vid-thumb" href="${safeUrl(item.url,item.title)}" target="_blank" style="background:${acc}22"><div class="play-circle" style="background:${acc}44;border-color:${acc}">▶</div>${item.duration?`<span class="vid-dur">${item.duration}</span>`:''} ${item.channel?`<span class="vid-ch" style="background:${acc}cc">${item.channel}</span>`:''}</a><div class="vid-body"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="font-size:13px;color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a><p style="margin:0;font-size:12px;color:rgba(255,255,255,0.4)">${item.summary||''}</p></div></div>`).join('')+'</div>';
+  }else{
     html+='<div class="cards">'+items.map(item=>{
       const bm=isBookmarked(item.title);
-      return`<div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-          <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" onmouseover="this.style.color='${acc}'" onmouseout="this.style.color='#f1f5f9'">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
-          <button class="bookmark-btn ${bm?'active':''}" onclick="toggleBookmark('${item.title.replace(/'/g,"\\'")}')"> ${bm?'★':'☆'}</button>
-        </div>
-        <p class="card-summary">${item.summary||''}</p>
-        <div class="card-footer">
-          ${item.category?badge(item.category):''}
-          ${item.rating?`<span style="font-size:12px;color:#fbbf24;font-weight:600">★ ${item.rating}</span>`:''}
-          <span class="card-meta">${item.source||''}${item.time?` · ${item.time}`:''}</span>
-        </div>
-      </div>`;
+      return`<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" onmouseover="this.style.color='${acc}'" onmouseout="this.style.color='#f1f5f9'">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a><button class="bookmark-btn ${bm?'active':''}" onclick="toggleBookmark('${item.title.replace(/'/g,"\\'")}')"> ${bm?'★':'☆'}</button></div><p class="card-summary">${item.summary||''}</p><div class="card-footer">${item.category?badge(item.category):''}${item.rating?`<span style="font-size:12px;color:#fbbf24;font-weight:600">★ ${item.rating}</span>`:''}<span class="card-meta">${item.source||''}${item.time?` · ${item.time}`:''}</span></div></div>`;
     }).join('')+'</div>';
   }
   document.getElementById('content').innerHTML=html;
 }
 
+function initApp(){
+  initTicker();
+  updateBg();renderTabs();renderContent();loadTab('world');
+  autoTimer=setInterval(()=>loadTab(state.tab,true),600000);
+}
+
+// ---- Boot ----
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
-updateBg();renderTabs();renderContent();loadTab('world');
-autoTimer=setInterval(()=>loadTab(state.tab,true),600000);
+
+const savedKey=loadKey();
+if(savedKey){
+  bootApp();
+}else{
+  document.getElementById('keyScreen').style.display='flex';
+}
 </script>
 </body>
 </html>

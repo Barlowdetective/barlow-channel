@@ -284,57 +284,56 @@ function initTicker(){
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function fetchNews(tab,attempt=0){
   try{
-    const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}&alt=json`,
-      {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'Accept':'application/json',
-          'X-Goog-Api-Key': GEMINI_API_KEY,
-        },
-        mode:'cors',
-        body:JSON.stringify({
-          contents:[{role:'user',parts:[{text:PROMPTS[tab]}]}],
-          tools:[{googleSearch:{}}],
-          generationConfig:{temperature:0.3,maxOutputTokens:2048,responseMimeType:'text/plain'}
-        })
-      }
-    );
-    if(res.status===429){if(attempt<3){await sleep((attempt+1)*10000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait a minute and try again.');}
-    if(res.status===400){
-      const errData=await res.json().catch(()=>({}));
-      const msg=errData?.error?.message||'Invalid request.';
-      throw new Error(`API error: ${msg} — Tap ⚙ to check your key.`);
+    const payload={
+      contents:[{role:'user',parts:[{text:PROMPTS[tab]}]}],
+      tools:[{googleSearch:{}}],
+      generationConfig:{temperature:0.3,maxOutputTokens:2048}
+    };
+
+    // Try direct call first, fall back to CORS proxies
+    const endpoints=[
+      ()=>fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
+      ()=>fetch(`https://corsproxy.io/?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
+      ()=>fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}),
+    ];
+
+    let res=null, lastErr=null;
+    for(const fn of endpoints){
+      try{
+        res=await Promise.race([fn(), new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),15000))]);
+        if(res&&res.ok) break;
+        if(res&&(res.status===400||res.status===401||res.status===403)) break;
+      }catch(e){ lastErr=e; res=null; }
     }
-    if(res.status===401||res.status===403){
-      throw new Error('Invalid or expired API key. Tap ⚙ Settings to update it.');
+
+    if(!res) throw new Error(lastErr?.message||'Could not reach API. Try again.');
+
+    if(res.status===429){
+      if(attempt<3){await sleep((attempt+1)*10000);return fetchNews(tab,attempt+1);}
+      throw new Error('Rate limit reached. Please wait a minute.');
+    }
+    if(res.status===400||res.status===401||res.status===403){
+      const errData=await res.json().catch(()=>({}));
+      const msg=errData?.error?.message||'';
+      throw new Error(`Invalid API key${msg?' — '+msg:''}. Tap ⚙ to update it.`);
     }
     if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
 
     const data=await res.json();
-
-    // Handle Gemini response structure
     const parts=data?.candidates?.[0]?.content?.parts||[];
     const text=parts.filter(p=>p.text).map(p=>p.text).join('');
-
     if(!text){
-      const finishReason=data?.candidates?.[0]?.finishReason;
-      if(finishReason==='SAFETY') throw new Error('Response blocked by safety filter. Try refreshing.');
-      throw new Error('Empty response from Gemini. Try refreshing.');
+      const reason=data?.candidates?.[0]?.finishReason;
+      throw new Error(reason==='SAFETY'?'Blocked by safety filter. Try refreshing.':'Empty response. Try refreshing.');
     }
-
-    // Strip markdown fences and extract JSON array
     const cleaned=text.replace(/```json|```/g,'').trim();
     const match=cleaned.match(/\[[\s\S]*\]/);
-    if(!match) throw new Error('Could not parse news data. Try refreshing.');
-
+    if(!match) throw new Error('Could not parse response. Try refreshing.');
     const parsed=JSON.parse(match[0]);
     if(!Array.isArray(parsed)||parsed.length===0) throw new Error('No articles found. Try refreshing.');
     return parsed;
 
   }catch(e){
-    if(e.message.includes('fetch')) throw new Error('Network error. Check your internet connection and try again.');
     throw new Error(e.message||'Unknown error. Try again.');
   }
 }

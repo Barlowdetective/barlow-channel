@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Barlow Channel"/>
+<meta name="theme-color" content="#1a2744"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<title>Barlow Channel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;overflow-x:hidden;}
+.tab-bg{transition:background 0.6s ease;min-height:100vh;}
+.header{background:rgba(0,0,0,0.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);position:sticky;top:0;z-index:100;}
+.logo{font-size:16px;font-weight:800;color:#fff;letter-spacing:1.5px;}
+.live-badge{font-size:10px;background:#ef444433;color:#fb7185;padding:2px 8px;border-radius:10px;border:1px solid #fb718555;font-weight:700;letter-spacing:1px;margin-left:8px;}
+.hdr-btns{display:flex;gap:6px;}
+.hdr-btn{border-radius:6px;font-size:11px;padding:5px 10px;cursor:pointer;font-weight:700;border:1px solid;background:transparent;transition:all 0.2s;}
+.ticker-wrap{background:rgba(0,0,0,0.4);padding:5px 0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.07);white-space:nowrap;}
+.ticker-inner{display:inline-block;white-space:nowrap;font-size:12px;color:rgba(255,255,255,0.5);}
+.install-bar{margin:10px 14px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.4);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;justify-content:space-between;}
+.install-bar p{margin:0;font-size:13px;color:rgba(255,255,255,0.8);}
+.install-bar span{font-size:11px;color:rgba(255,255,255,0.45);display:block;margin-top:2px;}
+.install-btn-bar{background:#6366f1;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.search-row{padding:10px 14px;display:flex;gap:8px;}
+.search-input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:9px 14px;color:#f1f5f9;font-size:14px;outline:none;-webkit-appearance:none;}
+.search-input::placeholder{color:rgba(255,255,255,0.35);}
+.saved-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:9px 14px;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;white-space:nowrap;font-weight:600;}
+.saved-btn.active{background:rgba(251,191,36,0.15);border-color:#fbbf24;color:#fbbf24;}
+.tabs{display:flex;overflow-x:auto;padding:0 14px;gap:4px;border-bottom:1px solid rgba(255,255,255,0.08);scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{border:none;border-radius:10px 10px 0 0;padding:9px 14px;font-size:13px;cursor:pointer;white-space:nowrap;transition:all 0.2s;background:transparent;color:rgba(255,255,255,0.4);font-weight:400;}
+.tab-btn.active{color:#fff;font-weight:700;}
+.cards{padding:12px 14px 36px;display:flex;flex-direction:column;gap:10px;}
+.video-grid{padding:12px 14px 36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:9px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:border-color 0.2s;}
+.card-title{font-weight:600;font-size:14px;line-height:1.45;color:#f1f5f9;text-decoration:none;display:block;}
+.card-summary{margin:0;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;}
+.card-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.card-meta{font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto;}
+.badge{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;flex-shrink:0;letter-spacing:0.3px;}
+.bookmark-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:0;flex-shrink:0;transition:color 0.2s;color:rgba(255,255,255,0.3);}
+.bookmark-btn.active{color:#fbbf24;}
+.vid-thumb{height:90px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:14px 14px 0 0;text-decoration:none;overflow:hidden;}
+.play-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;border:2px solid;}
+.vid-dur{position:absolute;bottom:8px;right:10px;background:rgba(0,0,0,0.75);color:#fff;font-size:11px;padding:2px 7px;border-radius:5px;}
+.vid-ch{position:absolute;top:8px;left:10px;color:#fff;font-size:11px;padding:2px 9px;border-radius:10px;font-weight:700;}
+.vid-body{padding:10px 14px;display:flex;flex-direction:column;gap:5px;}
+.play-btn{border-radius:20px;padding:6px 18px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;transition:all 0.2s;}
+.state-center{text-align:center;padding:70px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.state-icon{font-size:42px;}
+.state-title{font-size:15px;color:rgba(255,255,255,0.7);font-weight:500;}
+.state-sub{font-size:12px;color:rgba(255,255,255,0.3);}
+.retry-btn{margin-top:8px;border-radius:10px;padding:9px 22px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid;}
+</style>
+</head>
+<body>
+<div class="tab-bg" id="app">
+  <div class="header">
+    <div style="display:flex;align-items:center;">
+      <span class="logo">📺 BARLOW CHANNEL</span>
+      <span class="live-badge">● LIVE</span>
+    </div>
+    <div class="hdr-btns">
+      <button class="hdr-btn" id="autoBtn" onclick="toggleAuto()">⟳ Auto ON</button>
+      <button class="hdr-btn" id="refreshBtn" onclick="doRefresh()">⟳ Refresh</button>
+    </div>
+  </div>
+
+  <div class="ticker-wrap"><span class="ticker-inner" id="ticker"></span></div>
+
+  <div class="install-bar" id="installBar" style="display:none;">
+    <div>
+      <p>📲 Install Barlow Channel</p>
+      <span>Add to your home screen for the full app experience</span>
+    </div>
+    <button class="install-btn-bar" onclick="triggerInstall()">Install</button>
+  </div>
+
+  <div class="search-row">
+    <input class="search-input" id="searchInput" placeholder="🔍  Search articles..." oninput="onSearch()"/>
+    <button class="saved-btn" id="savedBtn" onclick="toggleSaved()">★ Saved</button>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="content"></div>
+</div>
+
+<script>
+const TABS=[
+  {id:"world",label:"World",icon:"🌍",color:"#6366f1",bg:"linear-gradient(135deg,#1e1b4b 0%,#312e81 40%,#1e3a5f 100%)"},
+  {id:"finance",label:"Finance",icon:"💹",color:"#10b981",bg:"linear-gradient(135deg,#052e16 0%,#064e3b 40%,#0c4a6e 100%)"},
+  {id:"nba",label:"NBA",icon:"🏀",color:"#f59e0b",bg:"linear-gradient(135deg,#1c1400 0%,#451a03 40%,#7c2d12 100%)"},
+  {id:"entertainment",label:"Entertainment",icon:"🎬",color:"#ec4899",bg:"linear-gradient(135deg,#2d0f2f 0%,#500724 40%,#1e1b4b 100%)"},
+  {id:"audio",label:"Audio",icon:"🔊",color:"#0ea5e9",bg:"linear-gradient(135deg,#0c1445 0%,#0369a1 40%,#164e63 100%)"},
+  {id:"video",label:"Video",icon:"🎥",color:"#f43f5e",bg:"linear-gradient(135deg,#1f0a15 0%,#881337 40%,#3b0764 100%)"},
+];
+const CAT_COLORS={Politics:"#818cf8",Economy:"#38bdf8",Climate:"#34d399",Tech:"#fbbf24",Health:"#f472b6",Conflict:"#fb7185",Markets:"#38bdf8",Crypto:"#fbbf24",Banking:"#818cf8",Commodities:"#34d399",Game:"#fbbf24",Trade:"#f472b6",Standings:"#818cf8",Player:"#34d399",Draft:"#38bdf8",Book:"#c084fc",Movie:"#38bdf8",Series:"#fbbf24",World:"#38bdf8",Finance:"#34d399"};
+const TICKER_ITEMS=["S&P 500: 5,312 ▲0.4%","NASDAQ: 16,742 ▲0.7%","DOW: 38,904 ▲0.2%","Nikkei: 38,230 ▼0.1%","BTC: $67,420 ▲1.2%","ETH: $3,540 ▲0.8%","EUR/USD: 1.0841","Gold: $2,324/oz ▲0.3%","Oil WTI: $78.42 ▼0.5%"];
+const today=new Date().toDateString();
+const PROMPTS={
+  world:`Search the web for the top 6 international news headlines today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Politics|Economy|Climate|Tech|Health|Conflict","time":"X hours ago"}`,
+  finance:`Search the web for top 6 finance/market news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets|Crypto|Economy|Banking|Commodities","time":"X hours ago"}`,
+  nba:`Search the web for latest 6 NBA news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Game|Trade|Standings|Player|Draft","time":"X hours ago"}`,
+  entertainment:`Search the web for 6 books/movies/series recommendations today (${today}). Mix 2 books,2 movies,2 series. Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentence review","source":"...","url":"https://...","category":"Book|Movie|Series","rating":"X/10","time":"X days ago"}`,
+  audio:`Search the web for top 5 news headlines today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","script":"3-4 sentence broadcaster script","source":"...","url":"https://...","duration":"~45 sec","category":"World|Finance|Tech|Health|Politics"}`,
+  video:`Search the web for 6 top news videos today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2 sentences","source":"...","channel":"CNN|BBC|Reuters|Al Jazeera|CNBC","duration":"X:XX","url":"https://..."}`,
+};
+
+let state={tab:"world",cache:{},loading:{},errors:{},bookmarks:[],search:"",showSaved:false,playing:null,autoRefresh:true,lastRefresh:{}};
+let inFlight={},deferredPrompt=null,autoTimer=null;
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').style.display='flex';});
+window.addEventListener('appinstalled',()=>{document.getElementById('installBar').style.display='none';});
+function triggerInstall(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBar').style.display='none';});}}
+
+// Ticker animation
+(function(){
+  const t=TICKER_ITEMS.join('   •   ');
+  const el=document.getElementById('ticker');
+  el.textContent=t+'   •   '+t+'   •   '+t;
+  let x=0;
+  function step(){x-=0.5;if(Math.abs(x)>el.scrollWidth/2)x=0;el.style.transform=`translateX(${x}px)`;requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+})();
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=TABS.map(t=>`<button class="tab-btn${state.tab===t.id?' active':''}" onclick="switchTab('${t.id}')" style="${state.tab===t.id?`background:${t.color};box-shadow:0 0 16px ${t.color}66;`:''}"> ${t.icon} ${t.label}</button>`).join('');
+}
+function switchTab(id){state.tab=id;state.showSaved=false;state.search='';document.getElementById('searchInput').value='';document.getElementById('savedBtn').className='saved-btn';renderTabs();updateBg();loadTab(id);renderContent();}
+function updateBg(){const t=TABS.find(x=>x.id===state.tab);if(t)document.getElementById('app').style.background=t.bg;}
+function getAccent(){return(TABS.find(t=>t.id===state.tab)||{color:'#6366f1'}).color;}
+function updateHeaderColors(){const c=getAccent();document.querySelectorAll('.hdr-btn').forEach(b=>{b.style.borderColor=c;b.style.color=c;});}
+
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function fetchNews(tab,attempt=0){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:PROMPTS[tab]}]})
+  });
+  if(res.status===429){if(attempt<3){await sleep((attempt+1)*8000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait and try again.');}
+  if(!res.ok)throw new Error(`Server error ${res.status}`);
+  const data=await res.json();
+  const text=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+  const match=text.match(/\[[\s\S]*\]/);
+  if(!match)throw new Error('No articles returned. Try refreshing.');
+  return JSON.parse(match[0]);
+}
+
+async function loadTab(tab,force=false){
+  if(inFlight[tab])return;
+  if(state.cache[tab]&&!force){renderContent();return;}
+  inFlight[tab]=true;
+  state.loading[tab]=true;state.errors[tab]=null;
+  renderContent();
+  try{
+    const items=await fetchNews(tab);
+    if(!Array.isArray(items)||items.length===0)throw new Error('No articles returned. Try refreshing.');
+    state.cache[tab]=items;state.lastRefresh[tab]=new Date();
+  }catch(e){state.errors[tab]=e.message;}
+  state.loading[tab]=false;inFlight[tab]=false;
+  renderContent();
+}
+
+function doRefresh(){if(!state.loading[state.tab])loadTab(state.tab,true);}
+function toggleAuto(){state.autoRefresh=!state.autoRefresh;document.getElementById('autoBtn').textContent=`⟳ Auto ${state.autoRefresh?'ON':'OFF'}`;if(autoTimer)clearInterval(autoTimer);if(state.autoRefresh)autoTimer=setInterval(()=>loadTab(state.tab,true),600000);}
+function onSearch(){state.search=document.getElementById('searchInput').value;renderContent();}
+function toggleSaved(){state.showSaved=!state.showSaved;document.getElementById('savedBtn').className='saved-btn'+(state.showSaved?' active':'');renderContent();}
+function toggleBookmark(title){
+  const item=(state.cache[state.tab]||[]).find(i=>i.title===title)||state.bookmarks.find(i=>i.title===title);
+  if(!item)return;
+  const idx=state.bookmarks.findIndex(b=>b.title===title);
+  if(idx>=0)state.bookmarks.splice(idx,1);else state.bookmarks.push(item);
+  renderContent();
+}
+function isBookmarked(t){return state.bookmarks.some(b=>b.title===t);}
+function playAudio(title,script){
+  if(state.playing===title){window.speechSynthesis?.cancel();state.playing=null;renderContent();return;}
+  window.speechSynthesis?.cancel();
+  const u=new SpeechSynthesisUtterance(script);
+  u.onend=()=>{state.playing=null;renderContent();};
+  window.speechSynthesis?.speak(u);
+  state.playing=title;renderContent();
+}
+
+function badge(cat){const c=CAT_COLORS[cat]||'#94a3b8';return`<span class="badge" style="background:${c}25;color:${c};border:1px solid ${c}55">${cat}</span>`;}
+function safeUrl(url,title){return(url&&url.startsWith('http'))?url:`https://www.google.com/search?q=${encodeURIComponent(title)}`;}
+
+function renderContent(){
+  updateHeaderColors();
+  const acc=getAccent();
+  const tab=state.tab;
+  const raw=state.showSaved?state.bookmarks:(state.cache[tab]||[]);
+  const items=state.search?raw.filter(i=>(i.title||'').toLowerCase().includes(state.search.toLowerCase())||(i.summary||'').toLowerCase().includes(state.search.toLowerCase())||(i.script||'').toLowerCase().includes(state.search.toLowerCase())):raw;
+  const ts=state.lastRefresh[tab];
+  const tabInfo=TABS.find(t=>t.id===tab);
+  let html='';
+  if(ts&&!state.showSaved)html+=`<div style="padding:5px 18px;font-size:11px;color:rgba(255,255,255,0.25);">Updated: ${ts.toLocaleTimeString()}</div>`;
+
+  if(state.loading[tab]&&!state.showSaved){
+    html+=`<div class="state-center"><div class="state-icon">${tabInfo?.icon||'📰'}</div><p class="state-title">Fetching latest news…</p><p class="state-sub">Searching the web — takes ~10 seconds</p></div>`;
+  } else if(state.errors[tab]&&!state.showSaved){
+    html+=`<div class="state-center"><p style="color:#fb7185;font-size:14px;">⚠ ${state.errors[tab]}</p><button class="retry-btn" style="background:${acc}22;border-color:${acc};color:${acc}" onclick="loadTab('${tab}',true)">⟳ Try Again</button></div>`;
+  } else if(items.length===0){
+    html+=`<div class="state-center"><p class="state-title" style="color:rgba(255,255,255,0.35)">${state.showSaved?'No saved articles yet.':'No results found.'}</p></div>`;
+  } else if(tab==='audio'&&!state.showSaved){
+    html+='<div class="cards">'+items.map(item=>{
+      const playing=state.playing===item.title;
+      return`<div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
+          ${item.category?badge(item.category):''}
+        </div>
+        <p class="card-summary" style="font-style:italic">"${item.script||''}"</p>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="play-btn" style="background:${playing?'#fb718522':acc+'22'};color:${playing?'#fb7185':acc};border-color:${playing?'#fb7185':acc}" onclick="playAudio('${item.title.replace(/'/g,"\\'")}',\`${(item.script||'').replace(/`/g,'\\`')}\`)">${playing?'⏹ Stop':'▶ Play'}</button>
+          <span style="font-size:12px;color:rgba(255,255,255,0.3)">${item.duration||''} · ${item.source||''}</span>
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  } else if(tab==='video'&&!state.showSaved){
+    html+='<div class="video-grid">'+items.map(item=>`<div class="card" style="padding:0;overflow:hidden">
+      <a class="vid-thumb" href="${safeUrl(item.url,item.title)}" target="_blank" style="background:${acc}22">
+        <div class="play-circle" style="background:${acc}44;border-color:${acc}">▶</div>
+        ${item.duration?`<span class="vid-dur">${item.duration}</span>`:''}
+        ${item.channel?`<span class="vid-ch" style="background:${acc}cc">${item.channel}</span>`:''}
+      </a>
+      <div class="vid-body">
+        <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" style="font-size:13px;color:#f1f5f9">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
+        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.4)">${item.summary||''}</p>
+      </div>
+    </div>`).join('')+'</div>';
+  } else {
+    html+='<div class="cards">'+items.map(item=>{
+      const bm=isBookmarked(item.title);
+      return`<div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <a class="card-title" href="${safeUrl(item.url,item.title)}" target="_blank" onmouseover="this.style.color='${acc}'" onmouseout="this.style.color='#f1f5f9'">${item.title} <span style="font-size:11px;color:${acc}">↗</span></a>
+          <button class="bookmark-btn ${bm?'active':''}" onclick="toggleBookmark('${item.title.replace(/'/g,"\\'")}')"> ${bm?'★':'☆'}</button>
+        </div>
+        <p class="card-summary">${item.summary||''}</p>
+        <div class="card-footer">
+          ${item.category?badge(item.category):''}
+          ${item.rating?`<span style="font-size:12px;color:#fbbf24;font-weight:600">★ ${item.rating}</span>`:''}
+          <span class="card-meta">${item.source||''}${item.time?` · ${item.time}`:''}</span>
+        </div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+  document.getElementById('content').innerHTML=html;
+}
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+updateBg();renderTabs();renderContent();loadTab('world');
+autoTimer=setInterval(()=>loadTab(state.tab,true),600000);
+</script>
+</body>
+</html>

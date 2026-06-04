@@ -190,12 +190,12 @@ const CAT_COLORS={Politics:"#818cf8",Economy:"#38bdf8",Climate:"#34d399",Tech:"#
 const TICKER_ITEMS=["S&P 500: 5,312 ▲0.4%","NASDAQ: 16,742 ▲0.7%","DOW: 38,904 ▲0.2%","Nikkei: 38,230 ▼0.1%","BTC: $67,420 ▲1.2%","ETH: $3,540 ▲0.8%","EUR/USD: 1.0841","Gold: $2,324/oz ▲0.3%","Oil WTI: $78.42 ▼0.5%"];
 const today=new Date().toDateString();
 const PROMPTS={
-  world:`Search the web for the top 6 international news headlines today (${today}). Return ONLY a raw JSON array, no markdown, no explanation. Each object: {"title":"...","summary":"2-3 sentences","source":"outlet name","url":"https://...","category":"Politics|Economy|Climate|Tech|Health|Conflict","time":"X hours ago"}`,
-  finance:`Search the web for top 6 finance and market news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets|Crypto|Economy|Banking|Commodities","time":"X hours ago"}`,
-  nba:`Search the web for latest 6 NBA news today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Game|Trade|Standings|Player|Draft","time":"X hours ago"}`,
-  entertainment:`Search the web for 6 books/movies/series recommendations today (${today}). Mix 2 books,2 movies,2 series. Return ONLY a raw JSON array. Each: {"title":"...","summary":"2-3 sentence review","source":"...","url":"https://...","category":"Book|Movie|Series","rating":"X/10","time":"X days ago"}`,
-  audio:`Search the web for top 5 news headlines today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","script":"3-4 sentence broadcaster script","source":"...","url":"https://...","duration":"~45 sec","category":"World|Finance|Tech|Health|Politics"}`,
-  video:`Search the web for 6 top news videos today (${today}). Return ONLY a raw JSON array. Each: {"title":"...","summary":"2 sentences","source":"...","channel":"CNN|BBC|Reuters|Al Jazeera|CNBC","duration":"X:XX","url":"https://..."}`,
+  world:`You are a news editor. Use Google Search to find the top 6 international news headlines from today ${today}. Return ONLY a valid JSON array, no markdown fences, no explanation before or after. Format: [{"title":"...","summary":"2-3 sentence summary","source":"outlet name","url":"https://...","category":"Politics","time":"2 hours ago"}]`,
+  finance:`You are a finance editor. Use Google Search to find the top 6 finance and market news stories from today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Markets","time":"1 hour ago"}]`,
+  nba:`You are an NBA editor. Use Google Search to find the latest 6 NBA stories from today ${today} — scores, trades, players. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentences","source":"...","url":"https://...","category":"Game","time":"3 hours ago"}]`,
+  entertainment:`You are an entertainment editor. Use Google Search to find 6 current book, movie or series recommendations. Mix 2 books, 2 movies, 2 series. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2-3 sentence review","source":"...","url":"https://...","category":"Movie","rating":"8.5/10","time":"1 day ago"}]`,
+  audio:`You are a news broadcaster. Use Google Search to find the top 5 news headlines from today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","script":"Write a 3-4 sentence script a broadcaster would read aloud","source":"...","url":"https://...","duration":"45 sec","category":"World"}]`,
+  video:`You are a video news editor. Use Google Search to find 6 top news videos from YouTube or news sites today ${today}. Return ONLY a valid JSON array, no markdown. Format: [{"title":"...","summary":"2 sentences","source":"...","channel":"BBC","duration":"3:24","url":"https://..."}]`,
 };
 
 let state={tab:"world",cache:{},loading:{},errors:{},bookmarks:[],search:"",showSaved:false,playing:null,autoRefresh:true,lastRefresh:{}};
@@ -285,31 +285,58 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function fetchNews(tab,attempt=0){
   try{
     const res=await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}&alt=json`,
       {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{
+          'Content-Type':'application/json',
+          'Accept':'application/json',
+          'X-Goog-Api-Key': GEMINI_API_KEY,
+        },
+        mode:'cors',
         body:JSON.stringify({
-          contents:[{parts:[{text:PROMPTS[tab]}]}],
-          tools:[{google_search:{}}],
-          generationConfig:{temperature:0.3,maxOutputTokens:2048}
+          contents:[{role:'user',parts:[{text:PROMPTS[tab]}]}],
+          tools:[{googleSearch:{}}],
+          generationConfig:{temperature:0.3,maxOutputTokens:2048,responseMimeType:'text/plain'}
         })
       }
     );
-    if(res.status===429){if(attempt<3){await sleep((attempt+1)*8000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait a moment.');}
-    if(res.status===400||res.status===401){
-      state.errors[tab]='Invalid API key. Tap ⚙ to update your key.';
-      state.loading[tab]=false;inFlight[tab]=false;
-      renderContent();return[];
+    if(res.status===429){if(attempt<3){await sleep((attempt+1)*10000);return fetchNews(tab,attempt+1);}throw new Error('Rate limit reached. Please wait a minute and try again.');}
+    if(res.status===400){
+      const errData=await res.json().catch(()=>({}));
+      const msg=errData?.error?.message||'Invalid request.';
+      throw new Error(`API error: ${msg} — Tap ⚙ to check your key.`);
+    }
+    if(res.status===401||res.status===403){
+      throw new Error('Invalid or expired API key. Tap ⚙ Settings to update it.');
     }
     if(!res.ok) throw new Error(`Server error ${res.status}. Try again.`);
+
     const data=await res.json();
-    const text=data?.candidates?.[0]?.content?.parts?.filter(p=>p.text)?.map(p=>p.text)?.join('')||'';
-    if(!text) throw new Error('No response from Gemini. Try refreshing.');
-    const match=text.match(/\[[\s\S]*\]/);
-    if(!match) throw new Error('Could not parse news. Try refreshing.');
-    return JSON.parse(match[0]);
-  }catch(e){throw new Error(e.message||'Could not connect. Check your network.');}
+
+    // Handle Gemini response structure
+    const parts=data?.candidates?.[0]?.content?.parts||[];
+    const text=parts.filter(p=>p.text).map(p=>p.text).join('');
+
+    if(!text){
+      const finishReason=data?.candidates?.[0]?.finishReason;
+      if(finishReason==='SAFETY') throw new Error('Response blocked by safety filter. Try refreshing.');
+      throw new Error('Empty response from Gemini. Try refreshing.');
+    }
+
+    // Strip markdown fences and extract JSON array
+    const cleaned=text.replace(/```json|```/g,'').trim();
+    const match=cleaned.match(/\[[\s\S]*\]/);
+    if(!match) throw new Error('Could not parse news data. Try refreshing.');
+
+    const parsed=JSON.parse(match[0]);
+    if(!Array.isArray(parsed)||parsed.length===0) throw new Error('No articles found. Try refreshing.');
+    return parsed;
+
+  }catch(e){
+    if(e.message.includes('fetch')) throw new Error('Network error. Check your internet connection and try again.');
+    throw new Error(e.message||'Unknown error. Try again.');
+  }
 }
 
 // ---- App Logic ----
